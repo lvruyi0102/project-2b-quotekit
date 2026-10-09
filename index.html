@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QuoteKit</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:0;background:#f4f1ea;color:#1c1917}
+main{max-width:880px;margin:32px auto;padding:24px;background:#fff;border:1px solid #e7e5e4}
+h1{font-size:22px;margin:0 0 8px}
+label{display:block;font-size:13px;margin:12px 0 4px}
+input,textarea{width:100%;box-sizing:border-box;padding:8px;border:1px solid #d6d3d1}
+button{margin-top:16px;padding:10px 14px;background:#1c1917;color:#fff;border:0}
+#out{margin-top:24px;white-space:pre-wrap;border-top:1px solid #e7e5e4;padding-top:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>QuoteKit</h1>
+<p>Freelancer quote generator. Numbers stay on this device.</p>
+<label>Seller</label><input id="seller" value="" />
+<label>Client</label><input id="client" />
+<label>Item</label><input id="item" value="Consulting" />
+<label>Amount (CNY)</label><input id="amount" type="number" value="3000" />
+<label>Notes</label><textarea id="notes" rows="3"></textarea>
+<button id="go">Generate quote</button>
+<div id="out"></div>
+</main>
+<script>
+document.getElementById('go').onclick = () => {
+  const seller = document.getElementById('seller').value || 'Seller';
+  const client = document.getElementById('client').value || 'Client';
+  const item = document.getElementById('item').value || 'Service';
+  const amount = Number(document.getElementById('amount').value || 0);
+  const notes = document.getElementById('notes').value;
+  const tax = Math.round(amount * 0.06 * 100) / 100;
+  const total = Math.round((amount + tax) * 100) / 100;
+  document.getElementById('out').textContent =
+    `QUOTE\nFrom: ${seller}\nTo: ${client}\nItem: ${item}\nAmount: ${amount.toFixed(2)} CNY\nReference tax 6%: ${tax.toFixed(2)} CNY\nTotal: ${total.toFixed(2)} CNY\nNotes: ${notes}\nThis is a draft, not a tax invoice.`;
+};
+</script>
+</body>
+</html>
